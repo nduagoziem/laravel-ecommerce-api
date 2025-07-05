@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tablets extends Model
 {
-    protected $casts = [
-        'tablet_images' => 'array',
-    ];
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection("tablet_images")
+            ->useDisk("public");
+    }
 }

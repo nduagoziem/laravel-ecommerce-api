@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\PhoneResource\Pages;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class PhoneResource extends Resource
 {
@@ -22,19 +23,21 @@ class PhoneResource extends Resource
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->placeholder("Vivo V23")
                     ->maxLength(255),
-                FileUpload::make('phone_images')
-                    ->multiple(false)
-                    ->disk('public')
-                    ->directory('Phone_Images')
+                SpatieMediaLibraryFileUpload::make('phone_images')
+                    ->collection('phone_images')
                     ->visibility('public')
-                    ->acceptedFileTypes(['image/*'])
-                    ->label('Phone Images')
+                    ->multiple(true)
+                    ->placeholder("Maximum of six images")
+                    ->maxFiles(6)
+                    ->image()
+                    ->label('Upload Phone Images')
                     ->panelLayout('grid')
                     ->previewable(true)
                     ->required(),
@@ -47,14 +50,15 @@ class PhoneResource extends Resource
                     ->placeholder("black, gray, slim")
                     ->maxLength(255),
                 Forms\Components\TextInput::make('stock')
-                    ->placeholder("How many are available")
+                    ->placeholder("How many are available?")
                     ->required()
+                    ->label('In Stock')
                     ->numeric(),
                 RichEditor::make('description')
                     ->columnSpanFull()
-                    ->fileAttachmentsDisk('public')
-                    ->fileAttachmentsDirectory('Phone_Images')
-                    ->fileAttachmentsVisibility('public')
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                    ])
                     ->placeholder("Describe your product")
                     ->required(),
             ]);

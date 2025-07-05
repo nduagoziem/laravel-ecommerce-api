@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tablets', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("tablet_images");
             $table->integer("price");
             $table->integer("stock");
             $table->string("tags");

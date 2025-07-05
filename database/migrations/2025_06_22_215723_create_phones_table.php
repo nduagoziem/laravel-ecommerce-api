@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string('phone_images');
             $table->integer("price");
             $table->string("tags");
             $table->integer("stock");

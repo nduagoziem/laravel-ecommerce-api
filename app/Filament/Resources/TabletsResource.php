@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TabletsResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\TabletsResource\RelationManagers;
 
 class TabletsResource extends Resource
@@ -29,13 +30,14 @@ class TabletsResource extends Resource
                     ->required()
                     ->placeholder("iPad 26")
                     ->maxLength(255),
-                FileUpload::make('tablet_images')
-                    ->multiple(false)
-                    ->disk('public')
-                    ->directory('Tablet_Images')
+                SpatieMediaLibraryFileUpload::make('tablet_images')
+                    ->collection('tablet_images')
                     ->visibility('public')
-                    ->acceptedFileTypes(['image/*'])
-                    ->label('Tablet Images')
+                    ->multiple(true)
+                    ->placeholder("Maximum of six images")
+                    ->maxFiles(6)
+                    ->image()
+                    ->label('Upload Tablet Images')
                     ->panelLayout('grid')
                     ->previewable(true)
                     ->required(),
@@ -44,8 +46,9 @@ class TabletsResource extends Resource
                     ->numeric()
                     ->prefix('₦'),
                 Forms\Components\TextInput::make('stock')
-                    ->placeholder("How many are available")
+                    ->placeholder("How many are available?")
                     ->required()
+                    ->label('In Stock')
                     ->numeric(),
                 Forms\Components\TextInput::make('tags')
                     ->placeholder("black, ipad, google tablets")

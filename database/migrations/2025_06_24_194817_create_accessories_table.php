@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('accessories', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("accessories_images");
             $table->integer("price");
             $table->integer("stock");
             $table->string("tags");

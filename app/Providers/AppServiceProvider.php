@@ -30,9 +30,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Phone::observe(PhoneObserver::class);
-        Computers::observe(ComputerObserver::class);
-        Tablets::observe(TabletObserver::class);
-        Accessories::observe(AccessoriesObserver::class);
     }
 }

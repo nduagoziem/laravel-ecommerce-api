@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TabletRequest;
 use App\Models\Tablets;
 use Illuminate\Http\Request;
+use App\Http\Requests\TabletRequest;
+use App\Http\Resources\TabletCollection;
 
 class TabletController extends Controller
 {
   //
   public function get(TabletRequest $tabletRequest)
   {
-    return $tabletRequest->tabletGetRequest();
+    return new TabletCollection(
+      Tablets::inRandomOrder("id")->with('media')->paginate($tabletRequest->query('per_page', 10))
+    );
   }
 }

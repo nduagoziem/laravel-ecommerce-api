@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Accessories extends Model
 {
-    protected $casts = [
-        'accessories_images' => 'array',
-    ];
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection("accessories_images")
+            ->useDisk("public");
+    }
 }

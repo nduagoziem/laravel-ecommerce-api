@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AccessoriesResource\Pages;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\AccessoriesResource\RelationManagers;
 
 class AccessoriesResource extends Resource
@@ -29,13 +30,14 @@ class AccessoriesResource extends Resource
                     ->required()
                     ->placeholder("Digital HD Camera")
                     ->maxLength(255),
-                FileUpload::make('accessories_images')
-                    ->multiple( false)
-                    ->disk('public')
-                    ->directory('Accessories_Images')
+                SpatieMediaLibraryFileUpload::make('accessories_images')
+                    ->collection('accessories_images')
                     ->visibility('public')
-                    ->acceptedFileTypes(['image/*'])
-                    ->label('Accessory Images')
+                    ->multiple(true)
+                    ->placeholder("Maximum of six images")
+                    ->maxFiles(6)
+                    ->image()
+                    ->label('Upload Accessories Images')
                     ->panelLayout('grid')
                     ->previewable(true)
                     ->required(),
@@ -44,7 +46,8 @@ class AccessoriesResource extends Resource
                     ->numeric()
                     ->prefix('₦'),
                 Forms\Components\TextInput::make('stock')
-                    ->placeholder("How many are available")
+                    ->placeholder("How many are available?")
+                    ->label('In Stock')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('tags')

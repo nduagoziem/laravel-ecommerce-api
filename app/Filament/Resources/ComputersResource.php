@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ComputersResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\ComputersResource\RelationManagers;
 
 class ComputersResource extends Resource
@@ -29,13 +30,14 @@ class ComputersResource extends Resource
                     ->required()
                     ->placeholder("HP Elite Book")
                     ->maxLength(255),
-                FileUpload::make('computer_images')
-                    ->multiple(false)
-                    ->disk('public')
-                    ->directory('Computer_Images')
+                SpatieMediaLibraryFileUpload::make('computer_images')
+                    ->collection('computer_images')
                     ->visibility('public')
-                    ->acceptedFileTypes(['image/*'])
-                    ->label('Computer Images')
+                    ->multiple(true)
+                    ->placeholder("Maximum of six images")
+                    ->maxFiles(6)
+                    ->image()
+                    ->label('Upload Computer Images')
                     ->panelLayout('grid')
                     ->previewable(true)
                     ->required(),
@@ -44,8 +46,9 @@ class ComputersResource extends Resource
                     ->numeric()
                     ->prefix('₦'),
                 Forms\Components\TextInput::make('stock')
-                    ->placeholder("How many are available")
+                    ->placeholder("How many are available??")
                     ->required()
+                    ->label('In Stock')
                     ->numeric(),
                 Forms\Components\TextInput::make('tags')
                     ->required()
