@@ -34,8 +34,8 @@ class ComputersResource extends Resource
                     ->collection('computer_images')
                     ->visibility('public')
                     ->multiple(true)
-                    ->placeholder("Maximum of six images")
-                    ->maxFiles(6)
+                    ->placeholder("Maximum of 5 images")
+                    ->maxFiles(5)
                     ->image()
                     ->label('Upload Computer Images')
                     ->panelLayout('grid')
@@ -45,6 +45,11 @@ class ComputersResource extends Resource
                     ->required()
                     ->numeric()
                     ->prefix('₦'),
+                Forms\Components\TextInput::make('brand')
+                    ->required()
+                    ->label("Brand Name")
+                    ->placeholder("hp")
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('stock')
                     ->placeholder("How many are available??")
                     ->required()
@@ -76,8 +81,17 @@ class ComputersResource extends Resource
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tags')
+                Tables\Columns\TextColumn::make('brand')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //

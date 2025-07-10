@@ -34,8 +34,8 @@ class PhoneResource extends Resource
                     ->collection('phone_images')
                     ->visibility('public')
                     ->multiple(true)
-                    ->placeholder("Maximum of six images")
-                    ->maxFiles(6)
+                    ->placeholder("Maximum of 5 images")
+                    ->maxFiles(5)
                     ->image()
                     ->label('Upload Phone Images')
                     ->panelLayout('grid')
@@ -45,6 +45,11 @@ class PhoneResource extends Resource
                     ->required()
                     ->numeric()
                     ->prefix('₦'),
+                Forms\Components\TextInput::make('brand')
+                    ->required()
+                    ->label("Brand Name")
+                    ->placeholder("vivo")
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('tags')
                     ->required()
                     ->placeholder("black, gray, slim")
@@ -76,7 +81,7 @@ class PhoneResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money("NGN")
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tags')
+                Tables\Columns\TextColumn::make('brand')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()

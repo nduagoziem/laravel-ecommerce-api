@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("hashid")->nullable();
             $table->string("name");
             $table->integer("price");
+            $table->string("brand");
             $table->string("tags");
             $table->integer("stock");
             $table->text("description");

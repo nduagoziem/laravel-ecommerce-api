@@ -34,8 +34,8 @@ class AccessoriesResource extends Resource
                     ->collection('accessories_images')
                     ->visibility('public')
                     ->multiple(true)
-                    ->placeholder("Maximum of six images")
-                    ->maxFiles(6)
+                    ->placeholder("Maximum of 5 images")
+                    ->maxFiles(5)
                     ->image()
                     ->label('Upload Accessories Images')
                     ->panelLayout('grid')
@@ -56,7 +56,7 @@ class AccessoriesResource extends Resource
                     ->maxLength(255),
                 RichEditor::make('description')
                     ->columnSpanFull()
-                                        ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('Accessories_Images')
                     ->fileAttachmentsVisibility('public')
                     ->placeholder("Describe your product")
@@ -78,6 +78,14 @@ class AccessoriesResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tags')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

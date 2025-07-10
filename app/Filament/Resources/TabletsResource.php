@@ -34,8 +34,8 @@ class TabletsResource extends Resource
                     ->collection('tablet_images')
                     ->visibility('public')
                     ->multiple(true)
-                    ->placeholder("Maximum of six images")
-                    ->maxFiles(6)
+                    ->placeholder("Maximum of 5 images")
+                    ->maxFiles(5)
                     ->image()
                     ->label('Upload Tablet Images')
                     ->panelLayout('grid')
@@ -50,6 +50,11 @@ class TabletsResource extends Resource
                     ->required()
                     ->label('In Stock')
                     ->numeric(),
+                Forms\Components\TextInput::make('brand')
+                    ->required()
+                    ->label("Brand Name")
+                    ->placeholder("apple")
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('tags')
                     ->placeholder("black, ipad, google tablets")
                     ->required()
@@ -76,8 +81,17 @@ class TabletsResource extends Resource
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tags')
+                Tables\Columns\TextColumn::make('brand')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
