@@ -3,36 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Phone;
-use App\Http\Resources\PhoneCollection;
+use App\Http\Resources\PhoneResource;
 
 class PhoneController extends Controller
 {
-  //
-  public function get()
+  public function get(): PhoneResource
   {
-    $query = Phone::query();
     $fields = request()->query('fields', ['*']);
-    $hashid = request()->query('hashid');
-    $brand = request()->query('brand');
     $per_page = request()->query('per_page', 16);
 
     // Ensures 'id' is included so that relationships with spatie media library works.
-    // Ensures 'hashid' is included if 'id' is not present.
+    // Ensures 'hashid' is included if 'hashid' is not present.
     if ($fields !== ['*'] && !in_array('id', $fields) && !in_array('hashid', $fields)) {
       $fields[] = 'id';
       $fields[] = 'hashid';
     }
 
-    if ($hashid) {
-      $query->where('hashid', $hashid);
-    } else if ($brand) {
-      $query->where("brand", $brand);
-    } else {
-      $query->inRandomOrder("id");
-    }
+    $phones = Phone::with('media')
+      ->select($fields)
+      ->inRandomOrder('id')
+      ->paginate($per_page);
 
-    $phones = $query->with('media')->select($fields)->paginate($per_page);
-
-    return new PhoneCollection($phones);
+    return new PhoneResource($phones);
   }
 }
