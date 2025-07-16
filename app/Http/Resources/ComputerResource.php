@@ -15,13 +15,13 @@ class ComputerResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($computer): array => [
-            'hashid' => $request->input('hashid', $computer->hashid),
-            'name' => $request->input('name', $computer->name),
-            'price' => $request->input('price', $computer->price),
-            'brand' => $request->input('brand', $computer->brand),
-            'tags' => $request->input('tags', $computer->tags),
-            'stock' => $request->input('stock', $computer->stock),
-            'description' => $request->input('description', $computer->description),
+            'hashid' => $computer->hashid,
+            'name' => $computer->name,
+            'price' => $computer->price,
+            'brand' => $computer->brand,
+            'tags' => $computer->tags,
+            'stock' => $computer->stock,
+            'description' => $computer->description,
             'media' => $computer->media->map(fn($m) => $m->getUrl())
         ])->toArray();
     }

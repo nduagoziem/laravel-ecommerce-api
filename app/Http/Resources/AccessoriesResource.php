@@ -15,12 +15,12 @@ class AccessoriesResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($accessories): array => [
-            'hashid' => $request->input('hashid', $accessories->hashid),
-            'name' => $request->input('name', $accessories->name),
-            'price' => $request->input('price', $accessories->price),
-            'tags' => $request->input('tags', $accessories->tags),
-            'stock' => $request->input('stock', $accessories->stock),
-            'description' => $request->input('description', $accessories->description),
+            'hashid' => $accessories->hashid,
+            'name' => $accessories->name,
+            'price' => $accessories->price,
+            'tags' => $accessories->tags,
+            'stock' => $accessories->stock,
+            'description' => $accessories->description,
             'media' => $accessories->media->map(fn($m) => $m->getUrl())
         ])->toArray();
     }

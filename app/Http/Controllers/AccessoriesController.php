@@ -13,10 +13,10 @@ class AccessoriesController extends Controller
   {
 
     $fields = request()->query('fields', ['*']);
-    $per_page = request()->query('per_page', 10);
+    $per_page = request()->query('per_page', 16);
 
     // Ensures 'id' is included so that relationships with spatie media library works.
-    // Ensure 'hashid' is included if 'hashid' is not present.
+    // Ensure 'hashid' is included.
     if ($fields !== ['*'] && !in_array('id', $fields) && !in_array('hashid', $fields)) {
       $fields[] = 'id';
       $fields[] = 'hashid';

@@ -15,13 +15,13 @@ class TabletResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($tablet): array => [
-            'hashid' => $request->input('hashid', $tablet->hashid),
-            'name' => $request->input('name', $tablet->name),
-            'price' => $request->input('price', $tablet->price),
-            'brand' => $request->input('brand', $tablet->brand),
-            'tags' => $request->input('tags', $tablet->tags),
-            'stock' => $request->input('stock', $tablet->stock),
-            'description' => $request->input('description', $tablet->description),
+            'hashid' => $tablet->hashid,
+            'name' => $tablet->name,
+            'price' => $tablet->price,
+            'brand' => $tablet->brand,
+            'tags' => $tablet->tags,
+            'stock' => $tablet->stock,
+            'description' => $tablet->description,
             'media' => $tablet->media->map(fn($m) => $m->getUrl())
         ])->toArray();
     }
