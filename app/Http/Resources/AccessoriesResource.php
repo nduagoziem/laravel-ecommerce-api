@@ -21,7 +21,10 @@ class AccessoriesResource extends ResourceCollection
             'tags' => $accessories->tags,
             'stock' => $accessories->stock,
             'description' => $accessories->description,
-            'media' => $accessories->media->map(fn($m) => $m->getUrl())
+            'media' => $accessories->media->map(fn($m) => [
+                'id' => $m->uuid,
+                'url' => $m->getUrl(),
+            ])
         ])->toArray();
     }
 }

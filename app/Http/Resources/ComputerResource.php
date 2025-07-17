@@ -22,7 +22,10 @@ class ComputerResource extends ResourceCollection
             'tags' => $computer->tags,
             'stock' => $computer->stock,
             'description' => $computer->description,
-            'media' => $computer->media->map(fn($m) => $m->getUrl())
+            'media' => $computer->media->map(fn($m) => [
+                'id' => $m->uuid,
+                'url' => $m->getUrl(),
+            ])
         ])->toArray();
     }
 }

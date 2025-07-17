@@ -24,7 +24,10 @@ class PhoneResource extends ResourceCollection
             'tags' => $phone->tags,
             'stock' => $phone->stock,
             'description' => $phone->description,
-            'media' => $phone->media->map(fn($m) => $m->getUrl())
+            'media' => $phone->media->map(fn($m) => [
+                'id' => $m->uuid,
+                'url' => $m->getUrl(),
+            ])
         ])->toArray();
     }
 }

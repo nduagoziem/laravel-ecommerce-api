@@ -22,7 +22,10 @@ class TabletResource extends ResourceCollection
             'tags' => $tablet->tags,
             'stock' => $tablet->stock,
             'description' => $tablet->description,
-            'media' => $tablet->media->map(fn($m) => $m->getUrl())
+            'media' => $tablet->media->map(fn($m) => [
+                'id' => $m->uuid,
+                'url' => $m->getUrl(),
+            ])
         ])->toArray();
     }
 }
