@@ -8,9 +8,6 @@ use App\Models\Phone;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Filament\Actions\DeleteAction;
-use Illuminate\Support\Facades\Storage;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\PhoneResource\Pages;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -33,6 +30,7 @@ class PhoneResource extends Resource
                 SpatieMediaLibraryFileUpload::make('phone_images')
                     ->collection('phone_images')
                     ->visibility('public')
+                    ->responsiveImages()
                     ->multiple(true)
                     ->placeholder("Maximum of 5 images")
                     ->maxFiles(5)
@@ -45,11 +43,22 @@ class PhoneResource extends Resource
                     ->required()
                     ->numeric()
                     ->prefix('₦'),
-                Forms\Components\TextInput::make('brand')
+                Forms\Components\Select::make('brand')
+                    ->options([
+                        "samsung",
+                        "ios",
+                        "vivo",
+                        "tecno",
+                        "redmi",
+                        "infinix",
+                        "huawei",
+                        "oppo",
+                        "nokia",
+                        "itel"
+                    ])
                     ->required()
-                    ->label("Brand Name")
-                    ->placeholder("vivo")
-                    ->maxLength(255),
+                    ->native(false)
+                    ->label("Brand Name"),
                 Forms\Components\TextInput::make('tags')
                     ->required()
                     ->placeholder("black, gray, slim")

@@ -8,13 +8,9 @@ use Filament\Forms\Form;
 use App\Models\Computers;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ComputersResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use App\Filament\Resources\ComputersResource\RelationManagers;
 
 class ComputersResource extends Resource
 {
@@ -33,6 +29,7 @@ class ComputersResource extends Resource
                 SpatieMediaLibraryFileUpload::make('computer_images')
                     ->collection('computer_images')
                     ->visibility('public')
+                    ->responsiveImages()
                     ->multiple(true)
                     ->placeholder("Maximum of 5 images")
                     ->maxFiles(5)
@@ -45,11 +42,21 @@ class ComputersResource extends Resource
                     ->required()
                     ->numeric()
                     ->prefix('₦'),
-                Forms\Components\TextInput::make('brand')
+                Forms\Components\Select::make('brand')
+                    ->options([
+                        "apple",
+                        "acer",
+                        "dell",
+                        "hp",
+                        "msi",
+                        "lenovo",
+                        "samsung",
+                        "asus",
+                        "chromebook",
+                    ])
                     ->required()
                     ->label("Brand Name")
-                    ->placeholder("hp")
-                    ->maxLength(255),
+                    ->native(false),
                 Forms\Components\TextInput::make('stock')
                     ->placeholder("How many are available??")
                     ->required()

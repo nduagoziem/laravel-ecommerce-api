@@ -8,13 +8,9 @@ use App\Models\Tablets;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TabletsResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use App\Filament\Resources\TabletsResource\RelationManagers;
 
 class TabletsResource extends Resource
 {
@@ -33,6 +29,7 @@ class TabletsResource extends Resource
                 SpatieMediaLibraryFileUpload::make('tablet_images')
                     ->collection('tablet_images')
                     ->visibility('public')
+                    ->responsiveImages()
                     ->multiple(true)
                     ->placeholder("Maximum of 5 images")
                     ->maxFiles(5)
@@ -50,11 +47,18 @@ class TabletsResource extends Resource
                     ->required()
                     ->label('In Stock')
                     ->numeric(),
-                Forms\Components\TextInput::make('brand')
-                    ->required()
+                Forms\Components\Select::make('brand')
+                    ->options([
+                        "samsung",
+                        "ipad",
+                        "dell",
+                        "hp",
+                        "infinix",
+                        "acer",
+                    ])
                     ->label("Brand Name")
-                    ->placeholder("apple")
-                    ->maxLength(255),
+                    ->required()
+                    ->native(false),
                 Forms\Components\TextInput::make('tags')
                     ->placeholder("black, ipad, google tablets")
                     ->required()

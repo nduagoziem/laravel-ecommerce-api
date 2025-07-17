@@ -8,13 +8,9 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Accessories;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AccessoriesResource\Pages;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use App\Filament\Resources\AccessoriesResource\RelationManagers;
 
 class AccessoriesResource extends Resource
 {
@@ -33,6 +29,7 @@ class AccessoriesResource extends Resource
                 SpatieMediaLibraryFileUpload::make('accessories_images')
                     ->collection('accessories_images')
                     ->visibility('public')
+                    ->responsiveImages()
                     ->multiple(true)
                     ->placeholder("Maximum of 5 images")
                     ->maxFiles(5)
@@ -56,9 +53,9 @@ class AccessoriesResource extends Resource
                     ->maxLength(255),
                 RichEditor::make('description')
                     ->columnSpanFull()
-                    ->fileAttachmentsDisk('public')
-                    ->fileAttachmentsDirectory('Accessories_Images')
-                    ->fileAttachmentsVisibility('public')
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                    ])
                     ->placeholder("Describe your product")
                     ->required(),
             ]);
