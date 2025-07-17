@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Hashids\Hashids;
-use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Phone extends Model implements HasMedia
 {

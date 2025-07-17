@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Hashids\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Accessories extends Model
+class Accessories extends Model implements HasMedia
 {
+    use InteractsWithMedia;
 
     public static function boot()
     {

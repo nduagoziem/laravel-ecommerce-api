@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Hashids\Hashids;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Tablets extends Model
+class Tablets extends Model implements HasMedia
 {
-
+    use InteractsWithMedia;
     public static function boot()
     {
 
