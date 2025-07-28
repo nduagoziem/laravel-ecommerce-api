@@ -44,15 +44,15 @@ class ComputersResource extends Resource
                     ->prefix('₦'),
                 Forms\Components\Select::make('brand')
                     ->options([
-                        "apple",
-                        "acer",
-                        "dell",
-                        "hp",
-                        "msi",
-                        "lenovo",
-                        "samsung",
-                        "asus",
-                        "chromebook",
+                        "apple" => "apple",
+                        "acer" => "acer",
+                        "dell" => "dell",
+                        "hp"=> "hp",
+                        "msi" => "msi",
+                        "lenovo" => "lenovo",
+                        "samsung" => "samsung",
+                        "asus" => "asus",
+                        "chromebook" => "chromebook"
                     ])
                     ->required()
                     ->label("Brand Name")

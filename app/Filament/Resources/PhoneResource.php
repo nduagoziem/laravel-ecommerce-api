@@ -45,16 +45,16 @@ class PhoneResource extends Resource
                     ->prefix('₦'),
                 Forms\Components\Select::make('brand')
                     ->options([
-                        "samsung",
-                        "ios",
-                        "vivo",
-                        "tecno",
-                        "redmi",
-                        "infinix",
-                        "huawei",
-                        "oppo",
-                        "nokia",
-                        "itel"
+                        "samsung" => "samsung",
+                        "ios" => "ios",
+                        "vivo" => "vivo",
+                        "tecno" => "tecno",
+                        "redmi" => "redmi",
+                        "infinix" => "infinix",
+                        "huawei" => "huawei",
+                        "oppo" => "oppo",
+                        "nokia" => "nokia",
+                        "itel" => "itel"
                     ])
                     ->required()
                     ->native(false)

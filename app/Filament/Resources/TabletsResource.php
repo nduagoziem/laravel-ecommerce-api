@@ -49,12 +49,12 @@ class TabletsResource extends Resource
                     ->numeric(),
                 Forms\Components\Select::make('brand')
                     ->options([
-                        "samsung",
-                        "ipad",
-                        "dell",
-                        "hp",
-                        "infinix",
-                        "acer",
+                        "samsung" => "samsung",
+                        "ipad" => "ipad",
+                        "dell" => "dell",
+                        "hp" => "hp",
+                        "infinix" => "infinix",
+                        "acer" => "acer",
                     ])
                     ->label("Brand Name")
                     ->required()
