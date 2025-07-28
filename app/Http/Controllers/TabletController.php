@@ -14,6 +14,7 @@ class TabletController extends Controller
     $fields = request()->query('fields', ['*']);
     $hashid = request()->query('hashid');
     $brand = request()->query('brand');
+    $searchRequest = request()->query('search');
     $per_page = request()->query('per_page', 16);
 
     // Ensures 'id' is included so that relationships with spatie media library works.
@@ -23,18 +24,34 @@ class TabletController extends Controller
       $fields[] = 'hashid';
     }
 
-    if ($hashid) {
-      $query->where('hashid', $hashid);
-    } else if ($brand) {
-      $query->where("brand", $brand);
-    } else {
-      $query->inRandomOrder("id");
+    switch (true) {
+      case $hashid !== null:
+        $query->where('hashid', $hashid);
+        break;
+
+      case $brand !== null && $searchRequest !== null:
+        $query
+          ->where('brand', $brand)
+          ->where('name', 'ILIKE', "%{$searchRequest}%")
+          ->select($fields);
+        break;
+
+      case $brand !== null:
+        $query->where('brand', $brand);
+        break;
+
+      case $searchRequest !== null:
+        $query->where('name', 'ILIKE', "%{$searchRequest}%");
+        break;
+
+      default:
+        $query->select($fields);
+        break;
     }
 
     $tablets = $query
-    ->with('media')
-    ->select($fields)
-    ->paginate($per_page);
+      ->with('media')
+      ->paginate($per_page);
 
     return new TabletResource($tablets);
   }
