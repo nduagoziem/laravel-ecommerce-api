@@ -2,15 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Accessories;
+use App\Models\User;
 use App\Models\Phone;
 use App\Models\Tablets;
 use App\Models\Computers;
-use App\Observers\AccessoriesObserver;
-use App\Observers\PhoneObserver;
-use App\Observers\TabletObserver;
-use App\Observers\ComputerObserver;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Accessories;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -29,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::unguard();
+        User::unguard();
+        Phone::unguard();
+        Computers::unguard();
+        Tablets::unguard();
+        Accessories::unguard();
     }
 }
