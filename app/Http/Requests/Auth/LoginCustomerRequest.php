@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\Customer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RegisterCustomerRequest extends FormRequest
+class LoginCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +25,7 @@ class RegisterCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string",
-            "email" => "required|string|lowercase|email|max:255|unique:" . Customer::class,
+            "email" => "required|string|lowercase|email|max:255",
             "password" => "required|min:8|regex:/\d/",
         ];
     }
@@ -36,7 +34,6 @@ class RegisterCustomerRequest extends FormRequest
     {
         return [
             "email.required" => "Email field can't be empty.",
-            'email.unique' => 'This email has already been taken.',
             'email.lowercase' => 'Email must be lowercase characters.',
             'email.email' => 'Email must be a valid email address.',
             "password.required" => "Password field can't be empty.",
@@ -45,7 +42,7 @@ class RegisterCustomerRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): never
     {
         $error = (new ValidationException($validator))->errors();
 

@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\RegisterCustomerRequest;
+use App\Http\Requests\Auth\LoginCustomerRequest;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -18,30 +20,53 @@ class CustomerController extends Controller
     {
         $data = $registerCustomerRequest->validated();
 
-        Customer::create([
+        $customer = Customer::create([
             'name' => $data['name'],
-            'email' => strtolower($data['email']),
-            'password' => bcrypt($data['password']),
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
+
+        Auth::login($customer, true);
 
         return response()->json([
             "success" => true,
             'message' => "Your account was created successfully.",
-        ], 200);
+        ], 201);
     }
-    public function logout(Request $request, Response $response): JsonResponse
+
+    public function login(LoginCustomerRequest $loginCustomerRequest): JsonResponse
     {
+        $data = $loginCustomerRequest->validated();
 
-        Auth::guard("web")->logout();
+        $customer = Customer::where("email", $data["email"])->first();
+        $password = Hash::check($data["password"], $customer->password);
 
-        $request->session()->invalidate();
+        if (!$customer && !$password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials.',
+            ], 401);
+        }
 
-        $request->session()->regenerateToken();
-
-        $response = "Logged Out.";
+        Auth::login($customer, true);
 
         return response()->json([
-            "message" => $response
+            "success" => true,
+            "message" => "Login successful."
         ], 200);
     }
+
+    // public function logout(Request $request, Response $response): JsonResponse
+    // {
+
+    //     Auth::guard("web")->logout();
+
+    //     $request->session()->invalidate();
+
+    //     $response = "Logged Out.";
+
+    //     return response()->json([
+    //         "message" => $response
+    //     ], 200);
+    // }
 }

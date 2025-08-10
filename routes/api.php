@@ -14,6 +14,8 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware("web")->group(function () {
     Route::post("/register", [CustomerController::class, "register"])->name("customer.register");
+    Route::post("/login", [CustomerController::class, "login"])->name("customer.login");
+    // Route::post("/logout", [CustomerController::class, "logout"])->name("customer.logout");
 });
 
 Route::get('/phones', [PhoneController::class, 'get'])->name('phones.get');
