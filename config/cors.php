@@ -14,11 +14,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', "/customer/register", "/customer/login", '/customer', "/customer/logout",],
 
     'allowed_methods' => ["GET", "POST"],
 
-    'allowed_origins' => [env("FRONTEND_URL", )],
+    'allowed_origins' => [env("FRONTEND_URL",)],
 
     'allowed_origins_patterns' => [],
 
