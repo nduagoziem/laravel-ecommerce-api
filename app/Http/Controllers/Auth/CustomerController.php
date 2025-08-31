@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\RegisterCustomerRequest;
 use App\Http\Requests\Auth\LoginCustomerRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+
+use function Laravel\Prompts\error;
 
 class CustomerController extends Controller
 {
@@ -22,11 +25,13 @@ class CustomerController extends Controller
 
         $customer = Customer::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'email' => strtolower($data['email']),
             'password' => Hash::make($data['password']),
         ]);
 
-        Auth::login($customer, true);
+        $registerCustomerRequest->session()->regenerate();
+
+        Auth::guard("customer")->login($customer, true);
 
         return response()->json([
             "success" => true,
@@ -38,17 +43,18 @@ class CustomerController extends Controller
     {
         $data = $loginCustomerRequest->validated();
 
-        $customer = Customer::where("email", $data["email"])->first();
-        $password = Hash::check($data["password"], $customer->password);
+        $customer = Customer::where("email", strtolower($data['email']))->first();
 
-        if (!$customer && !$password) {
+        if (!$customer || !Hash::check($data['password'], $customer->password)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid credentials.',
             ], 401);
         }
 
-        Auth::login($customer, true);
+        $loginCustomerRequest->session()->regenerate();
+
+        Auth::guard('customer')->login($customer, true);
 
         return response()->json([
             "success" => true,
@@ -56,17 +62,28 @@ class CustomerController extends Controller
         ], 200);
     }
 
-    // public function logout(Request $request, Response $response): JsonResponse
-    // {
+    public function getLoggedInCustomer(): JsonResponse
+    {
+        $name = Auth::guard("customer")->user()->name;
+        $email = Auth::guard("customer")->user()->email;
 
-    //     Auth::guard("web")->logout();
+        return response()->json([
+            "success" => true,
+            "message" => [
+                "name" => $name,
+                "email" => $email,
+            ]
+        ], 200);
+    }
 
-    //     $request->session()->invalidate();
+    public function logout(Request $request): JsonResponse
+    {
+        Auth::guard('customer')->logout();
 
-    //     $response = "Logged Out.";
+        $request->session()->invalidate();
 
-    //     return response()->json([
-    //         "message" => $response
-    //     ], 200);
-    // }
+        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Logged out.'], 200);
+    }
 }
