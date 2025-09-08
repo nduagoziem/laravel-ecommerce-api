@@ -15,6 +15,7 @@ class AccessoriesResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($accessories): array => [
+            'id' => $accessories->id,
             'hashid' => $accessories->hashid,
             'name' => $accessories->name,
             'price' => $accessories->price,

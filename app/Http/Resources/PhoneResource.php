@@ -17,6 +17,7 @@ class PhoneResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($phone): array => [
+            'id' => $phone->id,
             'hashid' => $phone->hashid,
             'name' => $phone->name,
             'price' => $phone->price,

@@ -15,6 +15,7 @@ class ComputerResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($computer): array => [
+            'id' => $computer->id,
             'hashid' => $computer->hashid,
             'name' => $computer->name,
             'price' => $computer->price,

@@ -15,6 +15,7 @@ class TabletResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->transform(fn($tablet): array => [
+            'id' => $tablet->id,
             'hashid' => $tablet->hashid,
             'name' => $tablet->name,
             'price' => $tablet->price,
