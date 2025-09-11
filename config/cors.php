@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', "/customer/register", "/customer/login", '/customer', "/customer/logout",],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', "/customer", "/customer/*", "/cart/*"],
 
-    'allowed_methods' => ["GET", "POST"],
+    'allowed_methods' => ["GET", "POST", "PATCH"],
 
     'allowed_origins' => [env("FRONTEND_URL",)],
 
