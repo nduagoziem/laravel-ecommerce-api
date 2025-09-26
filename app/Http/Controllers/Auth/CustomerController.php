@@ -4,16 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Auth\RegisterCustomerRequest;
-use App\Http\Requests\Auth\LoginCustomerRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-
-use function Laravel\Prompts\error;
+use App\Http\Requests\Auth\LoginCustomerRequest;
+use App\Http\Requests\Auth\RegisterCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -81,8 +77,6 @@ class CustomerController extends Controller
         Auth::guard('customer')->logout();
 
         $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
 
         return response()->json(['message' => 'Logged out.'], 200);
     }

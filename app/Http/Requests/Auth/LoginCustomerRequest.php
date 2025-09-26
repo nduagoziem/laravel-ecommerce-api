@@ -26,7 +26,7 @@ class LoginCustomerRequest extends FormRequest
     {
         return [
             "email" => "required|string|lowercase|email|max:255",
-            "password" => "required|min:8|regex:/\d/",
+            "password" => "required",
         ];
     }
 
@@ -37,8 +37,6 @@ class LoginCustomerRequest extends FormRequest
             'email.lowercase' => 'Email must be lowercase characters.',
             'email.email' => 'Email must be a valid email address.',
             "password.required" => "Password field can't be empty.",
-            'password.min' => 'Password should be at least 8 characters long.',
-            'password.regex' => 'Password should have at least one number.',
         ];
     }
 
