@@ -26,6 +26,11 @@ class Accessories extends Model implements HasMedia
         });
     }
 
+    public function cartItems()
+    {
+        return $this->morphMany(CartItems::class, 'product');
+    }
+
     public function registerMediaCollections(): void
     {
         $this
