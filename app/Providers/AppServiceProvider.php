@@ -2,15 +2,10 @@
 
 namespace App\Providers;
 
-use App\Interfaces\CartServiceInterface;
-use App\Models\User;
-use App\Models\Phone;
-use App\Models\Tablets;
-use App\Models\Computers;
-use App\Models\Accessories;
-use App\Services\CartService;
 use Illuminate\Support\ServiceProvider;
-
+use App\Services\{CartService, OrderService};
+use App\Models\{User, Phone, Tablets, Computers, Accessories};
+use App\Interfaces\{CartServiceInterface, OrderServiceInterface};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
         $this->app->singleton(CartServiceInterface::class, CartService::class);
+        $this->app->singleton(OrderServiceInterface::class, OrderService::class);
     }
 
     /**

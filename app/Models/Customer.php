@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ *  Authentication model for customers.
+ */
 class Customer extends Authenticatable
 {
-    // Authentication model for customers.
-
     /**
      * The attributes that are mass assignable.
      *
@@ -46,5 +47,10 @@ class Customer extends Authenticatable
     public function cart(): HasMany
     {
         return $this->hasMany(Cart::class, "customer_id");
+    }
+
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, "customer_id");
     }
 }
