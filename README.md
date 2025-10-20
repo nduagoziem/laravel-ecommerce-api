@@ -1,61 +1,289 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">GADGETS HUB E-COMMERCE API</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Demo API for a brand that deals on all kinds of gadgets. Built with the <strong>Laravel Framework.</strong>
 
-## About Laravel
+<h2 align="center">Table of Contents</h2>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **[Installation and Setup](#installation-and-setup)**
+-   **[Authentication](#authentication)**
+-   **[Cart](#cart)**
+-   **[Gadgets](#gadgets)**
+-   **[Order](#order)**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation and Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Clone the repository**:
+```bash
+git clone https://github.com/nduagoziem/laravel-ecommerce-api
+cd laravel-ecommerce-api
+```
 
-## Learning Laravel
+**Install dependencies**:
+```bash
+composer install
+npm install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Set up environment variables**:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Create a `.env` file in the root directory and add the necessary environment variables. Use `.env.example` as a guide.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Run the application**:
+  ```bash
+  php artisan migrate
+  php artisan serve
+  npm run dev
+  ```
 
-## Laravel Sponsors
+## Authentication
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+<!-- REGISTER -->
+<p>Registration - Post Request</p>
 
-### Premium Partners
+```JSON
+ENDPOINT
+"/customer/register"
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+REQUEST
 
-## Contributing
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+}
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+RESPONSE
 
-## Code of Conduct
+{
+  "success": true,
+  "message": "Your account was created successfully."
+}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+STATUS
+201
+```
 
-## Security Vulnerabilities
+<!-- LOGIN -->
+<p>Login - Post Request</p>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```JSON
+ENDPOINT
+"/customer/login"
 
-## License
+REQUEST
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+{
+  "email": "john@example.com",
+  "password": "password123",
+}
+
+RESPONSE
+
+{
+  "success": true,
+  "message": "Login successful."
+}
+
+STATUS
+200
+```
+
+<!-- CURRENTLY LOGGED IN CUSTOMER -->
+<p>Logged In Customer - Get Request</p>
+
+```JSON
+ENDPOINT
+"/customer"
+
+RESPONSE
+
+{
+  "success": true,
+  "message": 
+  [
+    "name": "John Doe",
+    "email": "john@gmail.com",
+  ]
+}
+
+STATUS
+200
+```
+
+<!-- LOGOUT -->
+<p>Logout - Post Request</p>
+
+```JSON
+ENDPOINT
+"/customer/logout"
+
+REQUEST
+
+RESPONSE
+
+{
+  "message": "Logged out."
+}
+
+STATUS
+200
+```
+
+## Cart
+
+<p>You must have an account and be logged in before using the cart feature.</p>
+
+<!-- ADD TO CART -->
+<p>Add to Cart - Post Request</p>
+
+```JSON
+ENDPOINT
+"/cart/add"
+
+REQUEST
+
+{
+  "name": "Brand New PS5 Gaming Setup",
+  "imagePath": "https://yourimagepath.example.com",
+  "productId": 247 // Primary key of the product in the DB. Of course this is sanitized and re-validated.
+}
+
+RESPONSE
+
+{
+  "success": true,
+  "message": "Added to Cart."
+}
+
+STATUS
+200
+```
+
+<!-- SHOW CART - All Cart Items In A Customer's Cart -->
+<p>Show Cart - Get Request</p>
+
+```JSON
+ENDPOINT
+"/cart/show"
+
+RESPONSE
+
+{
+  "cart_id": 1,
+  "created_at": "2025-09-24T10:27:44.000000Z",
+  "id": 63,
+  "image_path": "https://yourimagepath.example.com",
+  "in_stock": 1,
+  "name": "Digital HD Camera",
+  "price": "20000.00",
+  "product_id": 1,
+  "quantity": 1,
+  "updated_at": "2025-09-24T10:27:44.000000Z"
+}
+
+STATUS
+200
+```
+
+<!-- UPDATE CART -->
+<p>Update Cart - Patch Request</p>
+
+```JSON
+ENDPOINT
+"/cart/update"
+
+REQUEST
+
+{
+  "name": "Digital HD Camera",
+  "productId": 44,
+  "quantity": 102,
+}
+
+```
+
+<!-- REMOVE FROM CART -->
+<p>Remove from cart - Post Request</p>
+
+```JSON
+ENDPOINT
+"/cart/remove"
+
+REQUEST
+
+{
+  "name": "Pink Headset",
+  "productId": 6,
+}
+
+RESPONSE
+
+{
+  "success": true,
+  "message": "Removed from cart."
+}
+
+STATUS
+200
+```
+
+<!-- GET PRICE TOTAL FROM THE DB -->
+<p>Estimated Total Price - Get Request</p>
+
+```JSON
+ENDPOINT
+"/cart/total"
+
+RESPONSE
+
+{
+  "message": 20000.00 // 20,0000
+}
+
+STATUS
+200
+```
+
+## Gadgets
+
+<li>Phones</li>
+
+<li>Computers</li>
+
+<li>Tablets</li>
+
+<li>Other Accessories</li>
+
+## Order
+
+<!-- ORDER THE GOODS IN YOUR CART AND MAKE PAYMENT. -->
+<p>Order and Pay - Post Request</p>
+
+```JSON
+ENDPOINT
+"/customer/order"
+
+REQUEST
+
+{
+  "first_name": "John", // Required
+  "last_name": "Doe", // Required
+  "email": "john@gmail.com", // Required
+  "phone_number": "08023456789", // Required - Phone Number should be a string.
+  "address": "42nd Japa Street.", // Required
+  "country": "Nigeria", // Required
+  "apartment_name": "", // Optional
+  "state": "Oyo", // Required
+  "postal_code": , // Optional
+  "city": "My City", // Required
+}
+
+RESPONSE
+{
+  "success": true,
+  "message": "https://redirect-url-for-payment"
+}
+
+STATUS
+200
+```
