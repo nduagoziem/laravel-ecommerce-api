@@ -33,7 +33,7 @@ return [
 
         'postgres.railway.internal' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'railway'),
+            'host' => env('DB_HOST', 'postgres.railway.internal'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'railway'),
             'username' => env('DB_USERNAME', 'postgres'),
