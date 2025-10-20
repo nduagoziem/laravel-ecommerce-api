@@ -31,7 +31,7 @@ return [
 
     'connections' => [
 
-        'postgres.railway.internal' => [
+        'postgresql://postgres:gdDXkxwfHWrCePPIhwOtDCBhZvqELMYd@postgres.railway.internal:5432/railway' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'postgresql://postgres:gdDXkxwfHWrCePPIhwOtDCBhZvqELMYd@postgres.railway.internal:5432/railway'),
             'port' => env('DB_PORT', '5432'),
