@@ -4,11 +4,11 @@ A Demo API for a brand that deals on all kinds of gadgets. Built with the <stron
 
 <h2 align="center">Table of Contents</h2>
 
--   **[Installation and Setup](#installation-and-setup)**
--   **[Authentication](#authentication)**
--   **[Cart](#cart)**
--   **[Gadgets](#gadgets)**
--   **[Order](#order)**
+- **[Installation and Setup](#installation-and-setup)**
+- **[Authentication](#authentication)**
+- **[Cart](#cart)**
+- **[Gadgets](#gadgets)**
+- **[Order](#order)**
 
 ## Installation and Setup
 
@@ -38,65 +38,84 @@ Create a `.env` file in the root directory and add the necessary environment var
 ## Authentication
 
 <!-- REGISTER -->
-<p>Registration - Post Request</p>
+<h3>Registration - Post Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/customer/register"
+```
 
 REQUEST
 
+```JSON
 {
   "name": "John Doe",
   "email": "john@example.com",
   "password": "password123",
 }
+```
 
 RESPONSE
 
+``` json
 {
   "success": true,
   "message": "Your account was created successfully."
 }
+```
 
 STATUS
+
+``` json
 201
 ```
 
 <!-- LOGIN -->
-<p>Login - Post Request</p>
+<h3>Login - Post Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/customer/login"
+```
 
 REQUEST
 
+```JSON
 {
   "email": "john@example.com",
   "password": "password123",
 }
 
+```
 RESPONSE
 
+``` json
 {
   "success": true,
   "message": "Login successful."
 }
+```
 
 STATUS
+
+``` json
 200
 ```
 
 <!-- CURRENTLY LOGGED IN CUSTOMER -->
-<p>Logged In Customer - Get Request</p>
+<h3>Logged In Customer - Get Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/customer"
+```
 
 RESPONSE
 
+```JSON
 {
   "success": true,
   "message": 
@@ -105,27 +124,33 @@ RESPONSE
     "email": "john@gmail.com",
   ]
 }
+```
 
 STATUS
+
+``` json
 200
 ```
 
 <!-- LOGOUT -->
-<p>Logout - Post Request</p>
+<h3>Logout - Post Request</h3>
 
-```JSON
 ENDPOINT
-"/customer/logout"
 
-REQUEST
+``` json
+"/customer/logout"
+```
 
 RESPONSE
 
+```JSON
 {
   "message": "Logged out."
 }
-
+```
 STATUS
+
+``` json
 200
 ```
 
@@ -134,40 +159,50 @@ STATUS
 <p>You must have an account and be logged in before using the cart feature.</p>
 
 <!-- ADD TO CART -->
-<p>Add to Cart - Post Request</p>
+<h3>Add to Cart - Post Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/cart/add"
+```
 
 REQUEST
 
+```JSON
 {
   "name": "Brand New PS5 Gaming Setup",
   "imagePath": "https://yourimagepath.example.com",
-  "productId": 247 // Primary key of the product in the DB. Of course this is sanitized and re-validated.
+  "productId": 247 // Primary key of the product in the DB. Of course this is re-validated.
 }
+```
 
 RESPONSE
 
+``` json
 {
   "success": true,
   "message": "Added to Cart."
 }
-
-STATUS
-200
 ```
 
-<!-- SHOW CART - All Cart Items In A Customer's Cart -->
-<p>Show Cart - Get Request</p>
+STATUS
 
-```JSON
+``` json
+200
+```
+<!-- SHOW CART - All Cart Items In A Customer's Cart -->
+<h3>Show Cart - Get Request</h3>
+
 ENDPOINT
+
+``` json
 "/cart/show"
+```
 
 RESPONSE
 
+```JSON
 {
   "cart_id": 1,
   "created_at": "2025-09-24T10:27:44.000000Z",
@@ -180,67 +215,86 @@ RESPONSE
   "quantity": 1,
   "updated_at": "2025-09-24T10:27:44.000000Z"
 }
+```
 
 STATUS
+
+``` json
 200
 ```
 
 <!-- UPDATE CART -->
-<p>Update Cart - Patch Request</p>
+<h3>Update Cart - Patch Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/cart/update"
+```
 
 REQUEST
 
+```JSON
 {
   "name": "Digital HD Camera",
   "productId": 44,
   "quantity": 102,
 }
-
 ```
 
 <!-- REMOVE FROM CART -->
-<p>Remove from cart - Post Request</p>
+<h3>Remove from cart - Post Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/cart/remove"
+```
 
 REQUEST
 
+```JSON
 {
   "name": "Pink Headset",
   "productId": 6,
 }
+```
 
 RESPONSE
 
+```json
 {
   "success": true,
   "message": "Removed from cart."
 }
+```
 
 STATUS
+
+``` json
 200
 ```
 
 <!-- GET PRICE TOTAL FROM THE DB -->
-<p>Estimated Total Price - Get Request</p>
+<h3>Estimated Total Price - Get Request</h3>
 
-```JSON
 ENDPOINT
+
+``` json
 "/cart/total"
+```
 
 RESPONSE
 
+```JSON
 {
-  "message": 20000.00 // 20,0000
+  "message": 20000.00
 }
+```
 
 STATUS
+
+``` json
 200
 ```
 
@@ -256,7 +310,7 @@ ENDPOINT
 
 PARAMETERS
 
-```
+``` txt
 
 fields -  name, brand, price, tags, stock, description, hashid, id.
 Example - "/api/phones?fields[]=name&fields[]=price&fields[]=brand"
@@ -270,12 +324,13 @@ Example - "/api/phones?brand=vivo"
 search - a text e.g brand new samsung galaxy s24
 Example - "/api/phones?search=brand new samsung galaxy s24"
 
-per_page - How many gadgets or products per page default value is 16.
+per_page - How many gadgets or products per page. Default value is 16.
 Example - "/api/phones?per_page=20"
 
 ```
 
 RESPONSE
+
 ```JSON
 {
   "data": [
@@ -291,14 +346,14 @@ RESPONSE
       "media": [
           {
               "id": "a-random-string",
-              "url": "http://yourimageurlorpath.example.com"
+              "url": "https://yourimageurlorpath.example.com"
           }
       ]
   }
   ],
   "links": {
-  "first": "http://localhost:8000/api/tablets?page=1",
-  "last": "http://localhost:8000/api/tablets?page=1",
+  "first": "https://mywebsite.com/api/phones?page=1",
+  "last": "https://mywebsite.com/api/phones?page=1",
   "prev": null,
   "next": null
   },
@@ -313,7 +368,7 @@ RESPONSE
           "active": false
       },
       {
-          "url": "http://localhost:8000/api/tablets?page=1",
+          "url": "https://mywebsite.com/api/phones?page=1",
           "label": "1",
           "active": true
       },
@@ -323,13 +378,12 @@ RESPONSE
           "active": false
       }
   ],
-  "path": "http://localhost:8000/api/tablets",
+  "path": "https://mywebsite.com/api/phones",
   "per_page": 16,
   "to": 1,
   "total": 1
   }
 }
-
 ```
 
 STATUS
@@ -338,11 +392,277 @@ STATUS
 200
 ```
 
-<li>Computers</li>
+<h3>Computers - Get Request</h3>
 
-<li>Tablets</li>
+ENDPOINT
 
-<li>Other Accessories</li>
+``` json
+"/api/pcs"
+```
+
+PARAMETERS
+
+``` txt
+
+fields -  name, brand, price, tags, stock, description, hashid, id.
+Example - "/api/pcs?fields[]=name&fields[]=price&fields[]=brand"
+
+hashid - arandomstring
+Example - "/api/pcs?hashid=arandomstring"
+
+brand - brand of a phone e.g dell, hp etc.
+Example - "/api/pcs?brand=hp"
+
+search - a text e.g Apple MacBook M4 Pro.
+Example - "/api/pcs?search=Apple MacBook M4 Pro."
+
+per_page - How many gadgets or products per page. Default value is 16.
+Example - "/api/pcs?per_page=20"
+
+```
+
+RESPONSE
+
+```JSON
+{
+  "data": [
+  {
+      "id": 1,
+      "hashid": "arandomstring",
+      "name": "Dell Latitude E7440 Windows 10 Pro.",
+      "price": 50000,
+      "brand": "tecno",
+      "tags": "black",
+      "stock": 20,
+      "description": "<p>Brand New Laptop</p>",
+      "media": [
+          {
+              "id": "a-random-string",
+              "url": "https://yourimageurlorpath.example.com"
+          }
+      ]
+  }
+  ],
+  "links": {
+  "first": "https://mywebsite.com/api/pcs?page=1",
+  "last": "https://mywebsite.com/api/pcs?page=1",
+  "prev": null,
+  "next": null
+  },
+  "meta": {
+  "current_page": 1,
+  "from": 1,
+  "last_page": 1,
+  "links": [
+      {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+      },
+      {
+          "url": "https://mywebsite.com/api/pcs?page=1",
+          "label": "1",
+          "active": true
+      },
+      {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+      }
+  ],
+  "path": "https://mywebsite.com/api/pcs",
+  "per_page": 16,
+  "to": 1,
+  "total": 1
+  }
+}
+```
+
+STATUS
+
+``` json
+200
+```
+
+<h3>Tablets - Get Request</h3>
+
+ENDPOINT
+
+``` json
+"/api/tablets"
+```
+
+PARAMETERS
+
+``` txt
+
+fields -  name, brand, price, tags, stock, description, hashid, id.
+Example - "/api/tablets?fields[]=name&fields[]=price&fields[]=brand"
+
+hashid - arandomstring
+Example - "/api/tablets?hashid=arandomstring"
+
+brand - brand of a phone e.g ipad, dell tablets etc.
+Example - "/api/tablets?brand=dell"
+
+search - a text e.g Brand New Dell Tablets
+Example - "/api/tablets?search=brand new dell tablets"
+
+per_page - How many gadgets or products per page. Default value is 16.
+Example - "/api/tablets?per_page=26"
+
+```
+
+RESPONSE
+
+```JSON
+{
+  "data": [
+  {
+      "id": 1,
+      "hashid": "arandomstring",
+      "name": "iPad 26",
+      "price": 50000,
+      "brand": "ipad",
+      "tags": "silver",
+      "stock": 88,
+      "description": "<p>Brand New iPad</p>",
+      "media": [
+          {
+              "id": "a-random-string",
+              "url": "https://yourimageurlorpath.example.com"
+          }
+      ]
+  }
+  ],
+  "links": {
+  "first": "https://mywebsite.com/api/tablets?page=1",
+  "last": "https://mywebsite.com/api/tablets?page=1",
+  "prev": null,
+  "next": null
+  },
+  "meta": {
+  "current_page": 1,
+  "from": 1,
+  "last_page": 1,
+  "links": [
+      {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+      },
+      {
+          "url": "https://mywebsite.com/api/tablets?page=1",
+          "label": "1",
+          "active": true
+      },
+      {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+      }
+  ],
+  "path": "https://mywebsite.com/api/tablets",
+  "per_page": 16,
+  "to": 1,
+  "total": 1
+  }
+}
+```
+
+STATUS
+
+``` json
+200
+```
+
+<h3>Accessories - Get Request</h3>
+
+ENDPOINT
+
+``` json
+"/api/accessories"
+```
+
+PARAMETERS
+
+``` txt
+
+fields -  name, price, tags, stock, description, hashid, id.
+Example - "/api/accessories?fields[]=name&fields[]=price"
+
+hashid - arandomstring
+Example - "/api/accessories?hashid=arandomstring"
+
+search - a text e.g Brand New PS5 Console.
+Example - "/api/accessories?search=brand new ps5 console."
+
+per_page - How many gadgets or products per page. Default value is 16.
+Example - "/api/accessories?per_page=26"
+
+```
+
+RESPONSE
+
+```JSON
+{
+  "data": [
+  {
+      "id": 1,
+      "hashid": "arandomstring",
+      "name": "iPad 26",
+      "price": 50000,
+      "tags": "white, new, ps5",
+      "stock": 88,
+      "description": "<p>Brand New PS5</p>",
+      "media": [
+          {
+              "id": "a-random-string",
+              "url": "https://yourimageurlorpath.example.com"
+          }
+      ]
+  }
+  ],
+  "links": {
+  "first": "https://mywebsite.com/api/accessories?page=1",
+  "last": "https://mywebsite.com/api/accessories?page=1",
+  "prev": null,
+  "next": null
+  },
+  "meta": {
+  "current_page": 1,
+  "from": 1,
+  "last_page": 1,
+  "links": [
+      {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+      },
+      {
+          "url": "https://mywebsite.com/api/accessories?page=1",
+          "label": "1",
+          "active": true
+      },
+      {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+      }
+  ],
+  "path": "https://mywebsite.com/api/accessories",
+  "per_page": 16,
+  "to": 1,
+  "total": 1
+  }
+}
+```
+
+STATUS
+
+``` json
+200
+```
 
 ## Order
 
@@ -355,27 +675,33 @@ ENDPOINT
 ```
 
 REQUEST
-```JSON
 
+``` json
 {
-  "first_name": "John", //Required
-  "last_name": "Doe", //Required
-  // "email": "john@gmail.com", //Required
-  "phone_number": "08023456789", //Required - Phone Number should be a string.
-  "address": "42nd Japa Street.", //Required
-  "country": "Nigeria", //Required
+  "first_name": "John", // Required
+  "last_name": "Doe", // Required
+  "email": "john@gmail.com", // Required
+  "phone_number": "08023456789", // Required - Phone Number should be a string.
+  "address": "42nd Japa Street.", // Required
+  "country": "Nigeria", // Required
   "apartment_name": "", //Optional
-  "state": "Oyo", //Required
-  "postal_code": , // ptional
-  "city": "My City", //Required
+  "state": "Oyo", // Required
+  "postal_code": , // Optional
+  "city": "My City", // Required
 }
+```
 
 RESPONSE
+
+```json
 {
   "success": true,
   "message": "https://redirect-url-for-payment"
 }
+```
 
 STATUS
+
+``` json
 200
 ```
