@@ -246,7 +246,97 @@ STATUS
 
 ## Gadgets
 
-<li>Phones</li>
+<h3>Phones - Get Request</h3>
+
+ENDPOINT
+
+``` json
+"/api/phones"
+```
+
+PARAMETERS
+
+```
+
+fields -  name, brand, price, tags, stock, description, hashid, id.
+Example - "/api/phones?fields[]=name&fields[]=price&fields[]=brand"
+
+hashid - arandomstring
+Example - "/api/phones?hashid=arandomstring"
+
+brand - brand of a phone e.g tecno, itel etc.
+Example - "/api/phones?brand=vivo"
+
+search - a text e.g brand new samsung galaxy s24
+Example - "/api/phones?search=brand new samsung galaxy s24"
+
+per_page - How many gadgets or products per page default value is 16.
+Example - "/api/phones?per_page=20"
+
+```
+
+RESPONSE
+```JSON
+{
+  "data": [
+  {
+      "id": 1,
+      "hashid": "arandomstring",
+      "name": "Tecno Spark 10 Pro",
+      "price": 50000,
+      "brand": "tecno",
+      "tags": "black",
+      "stock": 20,
+      "description": "<p>Brand New Phone</p>",
+      "media": [
+          {
+              "id": "a-random-string",
+              "url": "http://yourimageurlorpath.example.com"
+          }
+      ]
+  }
+  ],
+  "links": {
+  "first": "http://localhost:8000/api/tablets?page=1",
+  "last": "http://localhost:8000/api/tablets?page=1",
+  "prev": null,
+  "next": null
+  },
+  "meta": {
+  "current_page": 1,
+  "from": 1,
+  "last_page": 1,
+  "links": [
+      {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+      },
+      {
+          "url": "http://localhost:8000/api/tablets?page=1",
+          "label": "1",
+          "active": true
+      },
+      {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+      }
+  ],
+  "path": "http://localhost:8000/api/tablets",
+  "per_page": 16,
+  "to": 1,
+  "total": 1
+  }
+}
+
+```
+
+STATUS
+
+``` json
+200
+```
 
 <li>Computers</li>
 
@@ -257,25 +347,27 @@ STATUS
 ## Order
 
 <!-- ORDER THE GOODS IN YOUR CART AND MAKE PAYMENT. -->
-<p>Order and Pay - Post Request</p>
+<h3>Order and Pay - Post Request</h3>
 
-```JSON
 ENDPOINT
+``` json
 "/customer/order"
+```
 
 REQUEST
+```JSON
 
 {
-  "first_name": "John", // Required
-  "last_name": "Doe", // Required
-  "email": "john@gmail.com", // Required
-  "phone_number": "08023456789", // Required - Phone Number should be a string.
-  "address": "42nd Japa Street.", // Required
-  "country": "Nigeria", // Required
-  "apartment_name": "", // Optional
-  "state": "Oyo", // Required
-  "postal_code": , // Optional
-  "city": "My City", // Required
+  "first_name": "John", //Required
+  "last_name": "Doe", //Required
+  // "email": "john@gmail.com", //Required
+  "phone_number": "08023456789", //Required - Phone Number should be a string.
+  "address": "42nd Japa Street.", //Required
+  "country": "Nigeria", //Required
+  "apartment_name": "", //Optional
+  "state": "Oyo", //Required
+  "postal_code": , // ptional
+  "city": "My City", //Required
 }
 
 RESPONSE
