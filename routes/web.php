@@ -1,20 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\CustomerController;
 
-Route::middleware('auth:customer')
-    ->prefix("customer")
-    ->group(function () {
-        Route::post("/register", [CustomerController::class, "register"])->name("customer.register");
+Route::post("/customer/register", [CustomerController::class, "register"])->name("customer.register")->middleware("guest:customer");
 
-        Route::post("/login", [CustomerController::class, "login"])->name("customer.login");
-        Route::post("/logout", [CustomerController::class, "logout"])->name("customer.logout");
+Route::post("/customer/login", [CustomerController::class, "login"])->name("customer.login")->middleware("guest:customer");
 
-        Route::get('', [CustomerController::class, "getLoggedInCustomer"])->name("customer"); // Still works if you use /customer
-    });
+Route::post("/customer/logout", [CustomerController::class, "logout"])->name("customer.logout")->middleware("auth:customer");
+
+Route::get('/customer', [CustomerController::class, "getLoggedInCustomer"])->middleware('auth:customer');
 
 Route::middleware('auth:customer')
     ->prefix("cart")
@@ -28,3 +26,8 @@ Route::middleware('auth:customer')
     });
 
 Route::post("/customer/order", [OrderController::class, "orderAndPay"])->name("customer.order")->middleware("auth:customer");
+
+Route::get('/run', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    return 'Migrations completed!';
+});
